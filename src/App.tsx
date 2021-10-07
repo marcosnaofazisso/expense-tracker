@@ -1,5 +1,5 @@
 import React from 'react'
-import { useState, useEffect} from 'react';
+import { useState, useEffect } from 'react';
 import * as C from './App.styles'
 import { Item } from './types/Item';
 import { Category } from './types/Category';
@@ -8,6 +8,7 @@ import { items } from './data/items';
 import { getCurrentMonth, filterListByMonth, formatCurrentMonth } from './helpers/dateFilter';
 import { TableArea } from './components/TableArea';
 import { InfoArea } from './components/InfoArea';
+import { InputArea } from './components/InputArea';
 
 function App() {
 
@@ -18,7 +19,7 @@ function App() {
   const [expense, setExpense] = useState(0);
 
   useEffect(() => {
-    setFilteredList( filterListByMonth(list, currentMonth) );
+    setFilteredList(filterListByMonth(list, currentMonth));
   }, [list, currentMonth]);
 
 
@@ -26,8 +27,8 @@ function App() {
     let incomeCount = 0;
     let expenseCount = 0;
 
-    for(let i in filteredList) {
-      if(categories[filteredList[i].category].expense) {
+    for (let i in filteredList) {
+      if (categories[filteredList[i].category].expense) {
         expenseCount += filteredList[i].value;
       } else {
         incomeCount += filteredList[i].value;
@@ -45,6 +46,12 @@ function App() {
 
   }
 
+  const handleAddItem = (item: Item) => {
+    let newList = [...list];
+    newList.push(item);
+    setList(newList);
+  }
+
   return (
     <div>
       <C.Container>
@@ -53,18 +60,20 @@ function App() {
         </C.Header>
         <C.Body>
 
-          <InfoArea 
-          currentMonth={currentMonth} 
-          onMonthChange={handleMonthChange}
-          income={income}
-          expense={expense}
-          
+          {/* Area de informações*/}
+          <InfoArea
+            currentMonth={currentMonth}
+            onMonthChange={handleMonthChange}
+            income={income}
+            expense={expense}
+
           />
 
           {/* Area de inserção*/}
+          <InputArea onAdd={handleAddItem} />
 
           {/* Tabela de items*/}
-          <TableArea list={filteredList}/>
+          <TableArea list={filteredList} />
 
 
         </C.Body>
