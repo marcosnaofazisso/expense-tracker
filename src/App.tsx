@@ -56,7 +56,7 @@ function App() {
     <div>
       <C.Container>
         <C.Header>
-          <C.HeaderText>Sistema Financeiro</C.HeaderText>
+          <C.HeaderText>Meu Controle Financeiro</C.HeaderText>
         </C.Header>
         <C.Body>
 
